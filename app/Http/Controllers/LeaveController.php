@@ -56,7 +56,7 @@ class LeaveController extends Controller
         $leave->leave_no = 1;
         $leave->reason = $request->input('reason');
 
-        //dd($leave);
+        dd($leave);
         $leave->save();
         //$leave->saveLeave($request);
 
