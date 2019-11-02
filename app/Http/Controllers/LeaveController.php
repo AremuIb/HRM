@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Leave;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class LeaveController extends Controller
 {
@@ -16,10 +18,11 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        $leaves = DB::table('leave')
+        /*$leaves = DB::table('leave')
             ->where('employee_id', Auth::user()->id)
             ->get();
-        return view('leave.index')->with('leaves', $leaves);
+        return view('leave.index')->with('leaves', $leaves);*/
+        return view('leave.index');
     }
 
     /**
@@ -41,23 +44,23 @@ class LeaveController extends Controller
     public function store(Request $request)
     {
         //dd($request);
-
         $this->validate($request, [
             //
         ]);
 
         $leave = new Leave;
-        $leave->employee_id = Auth::user()->id;
+        $leave->employee_id = auth()->user()->id;
         $leave->leave_begin = $request->input('leave_begin');
         $leave->leave_end = $request->input('leave_end');
         //$leave->leave_begin->diffInDays();
-        $leave->leave_no = '';
+        $leave->leave_no = 1;
         $leave->reason = $request->input('reason');
 
         //dd($leave);
         $leave->save();
+        //$leave->saveLeave($request);
 
-        return redirect('/leave');
+        return redirect('/leave')->with('success', 'Leave created, awaiting approval');
     }
 
     /**

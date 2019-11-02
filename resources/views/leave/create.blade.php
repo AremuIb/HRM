@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{ action('LeaveController@store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ action('LeaveController@store') }}">
     @csrf
         <div class="container">
             <div class="row justify-content-center">
